@@ -1,0 +1,21 @@
+# Render Blueprint — https://render.com/docs/infrastructure-as-code
+# Dashboard: New + → Blueprint → connect this repo, then enter MONGODB_URI when prompted.
+services:
+  - type: web
+    name: community-disaster-management-portal
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Baked into the React build — same-origin API (/api).
+      - key: REACT_APP_API_URL
+        value: /api
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false

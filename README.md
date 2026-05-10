@@ -196,6 +196,15 @@ project/
 - Add input validation and sanitization
 - Use HTTPS in production
 
+## Deployment (Render + MongoDB Atlas)
+
+This app is wired for **one Render Web Service**: Express serves the API and the built React app from `client/build` when `NODE_ENV=production`. The blueprint is in `render.yaml`.
+
+1. Create a **[MongoDB Atlas](https://www.mongodb.com/cloud/atlas)** cluster and note the connection string (use “Connect your application”; allow `0.0.0.0/0` in Network Access while testing Render).
+2. In **[Render](https://render.com)**, open **Blueprints**, connect the **Community-Disaster-Management-Portal** Git repository, and point Render at **`render.yaml`**.
+3. When prompted, set **`MONGODB_URI`** to your Atlas URI. **`JWT_SECRET`** can be auto-generated; **`REACT_APP_API_URL=/api`** is already set for same-origin API calls.
+4. After the first deploy, create an admin user with Render **Shell** (or run the script locally against Atlas): `cd server && npm run create-admin ...`
+
 ## License
 
 This project is open source and available for educational purposes.
